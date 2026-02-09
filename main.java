@@ -128,3 +128,29 @@ final class RockafEventLog {
         return new ArrayList<>(entries);
     }
 
+    public int getCount() {
+        return entries.size();
+    }
+}
+
+// ─── AmpStackProfile ─────────────────────────────────────────────────────────
+
+final class AmpStackProfile {
+
+    private final String name;
+    private final double gain;
+    private final double presence;
+    private final boolean crunch;
+
+    AmpStackProfile(String name, double gain, double presence, boolean crunch) {
+        this.name = name != null ? name : "clean";
+        this.gain = Math.max(RockafConstants.MIN_DISTORTION_GAIN,
+            Math.min(RockafConstants.MAX_DISTORTION_GAIN, gain));
+        this.presence = Math.max(0.0, Math.min(1.0, presence));
+        this.crunch = crunch;
+    }
+
+    public String getName() { return name; }
+    public double getGain() { return gain; }
+    public double getPresence() { return presence; }
+    public boolean isCrunch() { return crunch; }
