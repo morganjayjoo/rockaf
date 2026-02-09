@@ -50,3 +50,29 @@ final class RockafConstants {
 // ─── RockafRuntimeException ──────────────────────────────────────────────────
 
 final class RockafRuntimeException extends RuntimeException {
+
+    private final String errorCode;
+
+    RockafRuntimeException(String message) {
+        super(message);
+        this.errorCode = "ROCKAF_ERR";
+    }
+
+    RockafRuntimeException(String message, String errorCode) {
+        super(message);
+        this.errorCode = errorCode != null ? errorCode : "ROCKAF_ERR";
+    }
+
+    public String getErrorCode() {
+        return errorCode;
+    }
+}
+
+// ─── RockafRiffSlot ──────────────────────────────────────────────────────────
+
+final class RockafRiffSlot {
+
+    private final String patternId;
+    private final double gain;
+    private final int durationMs;
+    private final int barCount;
