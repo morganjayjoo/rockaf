@@ -180,3 +180,29 @@ final class StageZoneMap {
     private final String zoneName;
     private final double capacityShare;
 
+    StageZoneMap(int zoneIndex, String zoneName, double capacityShare) {
+        this.zoneIndex = Math.max(0, zoneIndex);
+        this.zoneName = zoneName != null ? zoneName : "zone_" + zoneIndex;
+        this.capacityShare = Math.max(0.0, Math.min(1.0, capacityShare));
+    }
+
+    public int getZoneIndex() { return zoneIndex; }
+    public String getZoneName() { return zoneName; }
+    public double getCapacityShare() { return capacityShare; }
+}
+
+// ─── VenuePreset ─────────────────────────────────────────────────────────────
+
+final class VenuePreset {
+
+    private final String id;
+    private final String name;
+    private final int capacity;
+    private final int zones;
+    private final boolean indoor;
+
+    VenuePreset(String id, String name, int capacity, int zones, boolean indoor) {
+        this.id = id != null ? id : "default";
+        this.name = name != null ? name : "Main Stage";
+        this.capacity = Math.max(100, Math.min(RockafConstants.CROWD_CAPACITY, capacity));
+        this.zones = Math.max(1, Math.min(RockafConstants.VENUE_ZONES, zones));
