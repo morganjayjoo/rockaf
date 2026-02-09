@@ -232,3 +232,29 @@ final class SustainCurve {
     public int getHoldTicks() { return holdTicks; }
 
     public double apply(double value, int ticksSinceHit) {
+        if (ticksSinceHit < holdTicks) return value;
+        int decayTicks = ticksSinceHit - holdTicks;
+        double mult = Math.pow(1.0 - decayPerTick, decayTicks);
+        return value * Math.max(0.0, mult);
+    }
+}
+
+// ─── TempoClock ──────────────────────────────────────────────────────────────
+
+final class TempoClock {
+
+    private final double bpm;
+    private final AtomicLong tickCount = new AtomicLong(0L);
+    private static final long MS_PER_MINUTE = 60_000L;
+
+    TempoClock(double bpm) {
+        this.bpm = Math.max(40.0, Math.min(300.0, bpm));
+    }
+
+    public long tick() {
+        return tickCount.incrementAndGet();
+    }
+
+    public long getTickCount() {
+        return tickCount.get();
+    }
