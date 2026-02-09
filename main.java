@@ -154,3 +154,29 @@ final class AmpStackProfile {
     public double getGain() { return gain; }
     public double getPresence() { return presence; }
     public boolean isCrunch() { return crunch; }
+}
+
+// ─── DrumKitPreset ───────────────────────────────────────────────────────────
+
+final class DrumKitPreset {
+
+    private final String name;
+    private final double tempoBpm;
+
+    DrumKitPreset(String name, double tempoBpm) {
+        this.name = name != null ? name : "default";
+        this.tempoBpm = Math.max(40.0, Math.min(300.0, tempoBpm));
+    }
+
+    public String getName() { return name; }
+    public double getTempoBpm() { return tempoBpm; }
+}
+
+// ─── StageZoneMap ────────────────────────────────────────────────────────────
+
+final class StageZoneMap {
+
+    private final int zoneIndex;
+    private final String zoneName;
+    private final double capacityShare;
+
