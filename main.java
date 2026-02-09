@@ -102,3 +102,29 @@ final class RockafEventLog {
 
         Entry(String kind, String payload, Instant at, int sequence) {
             this.kind = kind;
+            this.payload = payload;
+            this.at = at;
+            this.sequence = sequence;
+        }
+
+        public String getKind() { return kind; }
+        public String getPayload() { return payload; }
+        public Instant getAt() { return at; }
+        public int getSequence() { return sequence; }
+    }
+
+    private final List<Entry> entries = Collections.synchronizedList(new ArrayList<>());
+    private int nextSequence;
+
+    RockafEventLog() {
+        this.nextSequence = 1;
+    }
+
+    public void append(String kind, String payload) {
+        entries.add(new Entry(kind, payload, Instant.now(), nextSequence++));
+    }
+
+    public List<Entry> snapshot() {
+        return new ArrayList<>(entries);
+    }
+
