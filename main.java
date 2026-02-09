@@ -76,3 +76,29 @@ final class RockafRiffSlot {
     private final double gain;
     private final int durationMs;
     private final int barCount;
+
+    RockafRiffSlot(String patternId, double gain, int durationMs, int barCount) {
+        this.patternId = patternId;
+        this.gain = Math.max(0.0, Math.min(1.0, gain));
+        this.durationMs = Math.max(100, durationMs);
+        this.barCount = Math.max(1, barCount);
+    }
+
+    public String getPatternId() { return patternId; }
+    public double getGain() { return gain; }
+    public int getDurationMs() { return durationMs; }
+    public int getBarCount() { return barCount; }
+}
+
+// ─── RockafEventLog ──────────────────────────────────────────────────────────
+
+final class RockafEventLog {
+
+    static final class Entry {
+        private final String kind;
+        private final String payload;
+        private final Instant at;
+        private final int sequence;
+
+        Entry(String kind, String payload, Instant at, int sequence) {
+            this.kind = kind;
