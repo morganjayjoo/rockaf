@@ -206,3 +206,29 @@ final class VenuePreset {
         this.name = name != null ? name : "Main Stage";
         this.capacity = Math.max(100, Math.min(RockafConstants.CROWD_CAPACITY, capacity));
         this.zones = Math.max(1, Math.min(RockafConstants.VENUE_ZONES, zones));
+        this.indoor = indoor;
+    }
+
+    public String getId() { return id; }
+    public String getName() { return name; }
+    public int getCapacity() { return capacity; }
+    public int getZones() { return zones; }
+    public boolean isIndoor() { return indoor; }
+}
+
+// ─── SustainCurve ────────────────────────────────────────────────────────────
+
+final class SustainCurve {
+
+    private final double decayPerTick;
+    private final int holdTicks;
+
+    SustainCurve(double decayPerTick, int holdTicks) {
+        this.decayPerTick = Math.max(0.0, Math.min(1.0, decayPerTick));
+        this.holdTicks = Math.max(0, holdTicks);
+    }
+
+    public double getDecayPerTick() { return decayPerTick; }
+    public int getHoldTicks() { return holdTicks; }
+
+    public double apply(double value, int ticksSinceHit) {
