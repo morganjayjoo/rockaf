@@ -388,3 +388,29 @@ final class CrowdMeterService {
 
     CrowdMeterService(int capacity, String crowdOracleHex) {
         this.capacity = Math.max(100, Math.min(RockafConstants.CROWD_CAPACITY, capacity));
+        this.crowdOracleHex = crowdOracleHex != null ? crowdOracleHex : RockafConstants.CROWD_ORACLE_HEX;
+    }
+
+    public void setEnergy(int level) {
+        energyLevel.set(Math.max(0, Math.min(100, level)));
+        if (level >= 85) {
+            peakTimestamp.set(System.currentTimeMillis());
+        }
+    }
+
+    public int getEnergy() {
+        return energyLevel.get();
+    }
+
+    public long getPeakTimestamp() {
+        return peakTimestamp.get();
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public String getCrowdOracleHex() {
+        return crowdOracleHex;
+    }
+}
