@@ -674,3 +674,29 @@ final class FOHController {
     }
     public String getFohHex() { return fohHex; }
     public int getZones() { return zones; }
+}
+
+// ─── RigVaultService ─────────────────────────────────────────────────────────
+
+final class RigVaultService {
+
+    private final List<String> presetNames = new ArrayList<>();
+    private final String vaultHex;
+    private static final int MAX_PRESETS = 64;
+
+    RigVaultService() {
+        this.vaultHex = RockafConstants.RIG_VAULT_HEX;
+    }
+
+    public void addPreset(String name) {
+        if (presetNames.size() >= MAX_PRESETS) return;
+        if (name != null && !name.isEmpty()) {
+            presetNames.add(name);
+        }
+    }
+
+    public List<String> listPresets() {
+        return Collections.unmodifiableList(new ArrayList<>(presetNames));
+    }
+
+    public String getVaultHex() {
