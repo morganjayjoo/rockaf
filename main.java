@@ -414,3 +414,29 @@ final class CrowdMeterService {
         return crowdOracleHex;
     }
 }
+
+// ─── FeedbackBuffer ───────────────────────────────────────────────────────────
+
+final class FeedbackBuffer {
+
+    private final float[] samples;
+    private final int size;
+    private int writePos;
+    private int readPos;
+
+    FeedbackBuffer() {
+        this.size = RockafConstants.FEEDBACK_BUFFER_SAMPLES;
+        this.samples = new float[size];
+        this.writePos = 0;
+        this.readPos = 0;
+    }
+
+    public void write(float value) {
+        samples[writePos % size] = value;
+        writePos++;
+    }
+
+    public float read() {
+        if (readPos >= writePos) return 0.0f;
+        float v = samples[readPos % size];
+        readPos++;
