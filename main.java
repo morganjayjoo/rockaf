@@ -648,3 +648,29 @@ final class FOHController {
     private final String fohHex;
     private final int zones;
 
+    FOHController(int zones) {
+        this.zones = Math.max(1, Math.min(RockafConstants.VENUE_ZONES, zones));
+        this.zoneLevels = new AtomicInteger[this.zones];
+        for (int i = 0; i < this.zones; i++) {
+            zoneLevels[i] = new AtomicInteger(75);
+        }
+        this.fohHex = RockafConstants.FOH_HEX;
+    }
+
+    public void setMasterLevel(int level) {
+        masterLevel.set(Math.max(0, Math.min(100, level)));
+    }
+
+    public void setZoneLevel(int zoneIndex, int level) {
+        if (zoneIndex >= 0 && zoneIndex < zones) {
+            zoneLevels[zoneIndex].set(Math.max(0, Math.min(100, level)));
+        }
+    }
+
+    public int getMasterLevel() { return masterLevel.get(); }
+    public int getZoneLevel(int zoneIndex) {
+        if (zoneIndex < 0 || zoneIndex >= zones) return 0;
+        return zoneLevels[zoneIndex].get();
+    }
+    public String getFohHex() { return fohHex; }
+    public int getZones() { return zones; }
