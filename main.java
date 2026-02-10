@@ -752,3 +752,29 @@ public final class Rockaf {
         this.eventLog = new RockafEventLog();
         this.startTime = Instant.now();
     }
+
+    public void start() {
+        if (running.compareAndSet(false, true)) {
+            eventLog.append("sim_start", ROUTER_HEX);
+        }
+    }
+
+    public void stop() {
+        if (running.compareAndSet(true, false)) {
+            eventLog.append("sim_stop", FOH_HEX);
+        }
+    }
+
+    public boolean isRunning() {
+        return running.get();
+    }
+
+    public void triggerRiff() {
+        RockafRiffSlot slot = riffEngine.nextSlot();
+        if (slot != null) {
+            eventLog.append("riff_trigger", slot.getPatternId());
+        }
+    }
+
+    public void advanceSetlist() {
+        long now = System.currentTimeMillis();
