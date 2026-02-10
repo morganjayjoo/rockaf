@@ -440,3 +440,29 @@ final class FeedbackBuffer {
         if (readPos >= writePos) return 0.0f;
         float v = samples[readPos % size];
         readPos++;
+        return v;
+    }
+
+    public void reset() {
+        Arrays.fill(samples, 0.0f);
+        writePos = 0;
+        readPos = 0;
+    }
+
+    public int getSize() {
+        return size;
+    }
+}
+
+// ─── ZephyrRiffEngine ─────────────────────────────────────────────────────────
+
+final class ZephyrRiffEngine {
+
+    private static final String[] PATTERN_PREFIX = {
+        "crunch_", "lead_", "rhythm_", "break_", "bridge_", "outro_"
+    };
+
+    private final List<RockafRiffSlot> activeSlots = new ArrayList<>();
+    private int slotIndex;
+    private double currentTempo;
+
