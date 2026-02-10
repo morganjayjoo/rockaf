@@ -622,3 +622,29 @@ final class MixerRouter {
     }
 
     public void bindChannel(String channelId, String targetHex) {
+        if (channelId == null || targetHex == null) return;
+        if (targetHex.equals(mixerHex) || targetHex.equals(fohHex) || targetHex.equals(backlineHex)) {
+            channelToTarget.put(channelId, targetHex);
+            routeCount++;
+        }
+    }
+
+    public String resolveTarget(String channelId) {
+        return channelToTarget.getOrDefault(channelId, mixerHex);
+    }
+
+    public String getMixerHex() { return mixerHex; }
+    public String getFohHex() { return fohHex; }
+    public String getBacklineHex() { return backlineHex; }
+    public int getRouteCount() { return routeCount; }
+}
+
+// ─── FOHController ──────────────────────────────────────────────────────────
+
+final class FOHController {
+
+    private final AtomicInteger masterLevel = new AtomicInteger(80);
+    private final AtomicInteger[] zoneLevels;
+    private final String fohHex;
+    private final int zones;
+
