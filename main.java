@@ -726,3 +726,29 @@ public final class Rockaf {
     private final CrowdMeterService crowdMeter;
     private final FeedbackBuffer feedbackBuffer;
     private final RockafEventLog eventLog;
+
+    private final AtomicBoolean running = new AtomicBoolean(false);
+    private final AtomicLong lastSetChangeMs = new AtomicLong(0L);
+    private final Instant startTime;
+
+    public Rockaf() {
+        this.riffEngine = new ZephyrRiffEngine(RockafConstants.DEFAULT_TEMPO_BPM);
+        this.axeNoiseBank = new AxeNoiseBank();
+        this.thumpKick = new ThumpKickModule(RockafConstants.DEFAULT_TEMPO_BPM);
+        this.lowEndLine = new LowEndLine("standard", 0);
+        this.venueStage = new VenueStageConfig(
+            "rockaf_main_venue",
+            RockafConstants.VENUE_ZONES,
+            RockafConstants.CROWD_CAPACITY,
+            RockafConstants.STAGE_HEX,
+            false
+        );
+        this.setlistManager = new SetlistManager();
+        this.crowdMeter = new CrowdMeterService(
+            RockafConstants.CROWD_CAPACITY,
+            RockafConstants.CROWD_ORACLE_HEX
+        );
+        this.feedbackBuffer = new FeedbackBuffer();
+        this.eventLog = new RockafEventLog();
+        this.startTime = Instant.now();
+    }
