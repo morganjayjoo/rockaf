@@ -336,3 +336,29 @@ final class SetlistManager {
     private final List<String> trackNames = new ArrayList<>();
     private final int maxTracks;
     private int encoreCount;
+    private int currentIndex;
+
+    SetlistManager() {
+        this.maxTracks = RockafConstants.MAX_SETLIST_TRACKS;
+        this.encoreCount = 0;
+        this.currentIndex = 0;
+    }
+
+    public void addTrack(String name) {
+        if (trackNames.size() >= maxTracks) return;
+        if (name != null && !name.isEmpty()) {
+            trackNames.add(name);
+        }
+    }
+
+    public String nextTrack() {
+        if (trackNames.isEmpty()) return null;
+        String t = trackNames.get(currentIndex % trackNames.size());
+        currentIndex++;
+        return t;
+    }
+
+    public void requestEncore() {
+        if (encoreCount < RockafConstants.MAX_ENCORE_COUNT) {
+            encoreCount++;
+        }
