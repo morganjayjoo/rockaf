@@ -258,3 +258,29 @@ final class TempoClock {
     public long getTickCount() {
         return tickCount.get();
     }
+
+    public double getBpm() {
+        return bpm;
+    }
+
+    public long msPerBeat() {
+        return (long) (MS_PER_MINUTE / bpm);
+    }
+}
+
+// ─── LowEndLine ───────────────────────────────────────────────────────────────
+
+final class LowEndLine {
+
+    public static final int STRING_1 = 0;
+    public static final int STRING_2 = 1;
+    public static final int STRING_3 = 2;
+    public static final int STRING_4 = 3;
+
+    private final int[] rootMidiNote = new int[RockafConstants.BASS_STRING_COUNT];
+    private final int octaveShift;
+    private final String tuningName;
+
+    LowEndLine(String tuningName, int octaveShift) {
+        this.tuningName = tuningName != null ? tuningName : "standard";
+        this.octaveShift = Math.max(-2, Math.min(2, octaveShift));
