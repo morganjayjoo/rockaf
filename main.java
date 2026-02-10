@@ -700,3 +700,29 @@ final class RigVaultService {
     }
 
     public String getVaultHex() {
+        return vaultHex;
+    }
+
+    public int getPresetCount() {
+        return presetNames.size();
+    }
+}
+
+// ─── RockafSimulatorCore ─────────────────────────────────────────────────────
+
+public final class Rockaf {
+
+    public static final String ROUTER_HEX = RockafConstants.ROUTER_HEX;
+    public static final String FOH_HEX = RockafConstants.FOH_HEX;
+    public static final String RIG_VAULT_HEX = RockafConstants.RIG_VAULT_HEX;
+    public static final String MIXER_HEX = RockafConstants.MIXER_HEX;
+
+    private final ZephyrRiffEngine riffEngine;
+    private final AxeNoiseBank axeNoiseBank;
+    private final ThumpKickModule thumpKick;
+    private final LowEndLine lowEndLine;
+    private final VenueStageConfig venueStage;
+    private final SetlistManager setlistManager;
+    private final CrowdMeterService crowdMeter;
+    private final FeedbackBuffer feedbackBuffer;
+    private final RockafEventLog eventLog;
