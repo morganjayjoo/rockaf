@@ -518,3 +518,29 @@ final class AxeNoiseBank {
             this.gain = Math.max(RockafConstants.MIN_DISTORTION_GAIN,
                 Math.min(RockafConstants.MAX_DISTORTION_GAIN, gain));
             this.presence = Math.max(0.0, Math.min(1.0, presence));
+            this.crunch = crunch;
+        }
+
+        public String getChannelId() { return channelId; }
+        public double getGain() { return gain; }
+        public double getPresence() { return presence; }
+        public boolean isCrunch() { return crunch; }
+    }
+
+    private final Map<String, AmpProfile> profiles = new ConcurrentHashMap<>();
+    private final int maxChannels = RockafConstants.AMP_STACK_CHANNELS;
+    private int channelCount;
+
+    AxeNoiseBank() {
+        channelCount = 0;
+    }
+
+    public void registerProfile(String name, AmpProfile profile) {
+        if (channelCount >= maxChannels) return;
+        profiles.put(name, profile);
+        channelCount++;
+    }
+
+    public AmpProfile getProfile(String name) {
+        return profiles.get(name);
+    }
