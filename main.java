@@ -596,3 +596,29 @@ final class ThumpKickModule {
     }
 
     public double getTempo() {
+        return tempo;
+    }
+
+    public int randomPad() {
+        return ThreadLocalRandom.current().nextInt(RockafConstants.DRUM_KIT_PADS);
+    }
+}
+
+// ─── MixerRouter ─────────────────────────────────────────────────────────────
+
+final class MixerRouter {
+
+    private final Map<String, String> channelToTarget = new ConcurrentHashMap<>();
+    private final String mixerHex;
+    private final String fohHex;
+    private final String backlineHex;
+    private int routeCount;
+
+    MixerRouter() {
+        this.mixerHex = RockafConstants.MIXER_HEX;
+        this.fohHex = RockafConstants.FOH_HEX;
+        this.backlineHex = RockafConstants.BACKLINE_HEX;
+        this.routeCount = 0;
+    }
+
+    public void bindChannel(String channelId, String targetHex) {
