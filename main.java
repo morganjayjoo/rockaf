@@ -492,3 +492,29 @@ final class ZephyrRiffEngine {
 
     public void setTempo(double bpm) {
         this.currentTempo = Math.max(60.0, Math.min(200.0, bpm));
+    }
+
+    public double getTempo() {
+        return currentTempo;
+    }
+
+    public int getActiveSlotCount() {
+        return activeSlots.size();
+    }
+}
+
+// ─── AxeNoiseBank ─────────────────────────────────────────────────────────────
+
+final class AxeNoiseBank {
+
+    static final class AmpProfile {
+        private final String channelId;
+        private final double gain;
+        private final double presence;
+        private final boolean crunch;
+
+        AmpProfile(String channelId, double gain, double presence, boolean crunch) {
+            this.channelId = channelId;
+            this.gain = Math.max(RockafConstants.MIN_DISTORTION_GAIN,
+                Math.min(RockafConstants.MAX_DISTORTION_GAIN, gain));
+            this.presence = Math.max(0.0, Math.min(1.0, presence));
