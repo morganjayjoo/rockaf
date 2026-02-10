@@ -362,3 +362,29 @@ final class SetlistManager {
         if (encoreCount < RockafConstants.MAX_ENCORE_COUNT) {
             encoreCount++;
         }
+    }
+
+    public int getEncoreCount() {
+        return encoreCount;
+    }
+
+    public List<String> getTracks() {
+        return Collections.unmodifiableList(new ArrayList<>(trackNames));
+    }
+
+    public int getCurrentIndex() {
+        return currentIndex;
+    }
+}
+
+// ─── CrowdMeterService ───────────────────────────────────────────────────────
+
+final class CrowdMeterService {
+
+    private final AtomicInteger energyLevel = new AtomicInteger(0);
+    private final AtomicLong peakTimestamp = new AtomicLong(0L);
+    private final int capacity;
+    private final String crowdOracleHex;
+
+    CrowdMeterService(int capacity, String crowdOracleHex) {
+        this.capacity = Math.max(100, Math.min(RockafConstants.CROWD_CAPACITY, capacity));
