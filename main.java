@@ -310,3 +310,29 @@ final class VenueStageConfig {
 
     private final String venueId;
     private final int zones;
+    private final int capacity;
+    private final String stageHex;
+    private final boolean indoor;
+
+    VenueStageConfig(String venueId, int zones, int capacity, String stageHex, boolean indoor) {
+        this.venueId = venueId;
+        this.zones = Math.max(1, Math.min(RockafConstants.VENUE_ZONES, zones));
+        this.capacity = Math.max(100, Math.min(RockafConstants.CROWD_CAPACITY, capacity));
+        this.stageHex = stageHex != null ? stageHex : RockafConstants.STAGE_HEX;
+        this.indoor = indoor;
+    }
+
+    public String getVenueId() { return venueId; }
+    public int getZones() { return zones; }
+    public int getCapacity() { return capacity; }
+    public String getStageHex() { return stageHex; }
+    public boolean isIndoor() { return indoor; }
+}
+
+// ─── SetlistManager ──────────────────────────────────────────────────────────
+
+final class SetlistManager {
+
+    private final List<String> trackNames = new ArrayList<>();
+    private final int maxTracks;
+    private int encoreCount;
