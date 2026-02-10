@@ -570,3 +570,29 @@ final class ThumpKickModule {
     private final int[] lastHitTick = new int[RockafConstants.DRUM_KIT_PADS];
     private final double tempo;
     private int globalTick;
+
+    ThumpKickModule(double tempoBpm) {
+        this.tempo = Math.max(40.0, Math.min(300.0, tempoBpm));
+        this.globalTick = 0;
+    }
+
+    public void advanceTick() {
+        globalTick++;
+    }
+
+    public boolean trigger(int padIndex, int velocity) {
+        if (padIndex < 0 || padIndex >= RockafConstants.DRUM_KIT_PADS) return false;
+        lastHitTick[padIndex] = globalTick;
+        return velocity > 0 && velocity <= 127;
+    }
+
+    public int getLastHitTick(int padIndex) {
+        if (padIndex < 0 || padIndex >= RockafConstants.DRUM_KIT_PADS) return 0;
+        return lastHitTick[padIndex];
+    }
+
+    public int getGlobalTick() {
+        return globalTick;
+    }
+
+    public double getTempo() {
