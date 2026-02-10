@@ -544,3 +544,29 @@ final class AxeNoiseBank {
     public AmpProfile getProfile(String name) {
         return profiles.get(name);
     }
+
+    public int getChannelCount() {
+        return channelCount;
+    }
+
+    public String getBacklineHex() {
+        return RockafConstants.BACKLINE_HEX;
+    }
+}
+
+// ─── ThumpKickModule ─────────────────────────────────────────────────────────
+
+final class ThumpKickModule {
+
+    public static final int PAD_KICK = 0;
+    public static final int PAD_SNARE = 1;
+    public static final int PAD_HIHAT = 2;
+    public static final int PAD_TOM_LOW = 3;
+    public static final int PAD_TOM_MID = 4;
+    public static final int PAD_TOM_HIGH = 5;
+    public static final int PAD_CYMBAL = 6;
+    public static final int PAD_RIDE = 7;
+
+    private final int[] lastHitTick = new int[RockafConstants.DRUM_KIT_PADS];
+    private final double tempo;
+    private int globalTick;
