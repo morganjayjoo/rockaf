@@ -466,3 +466,29 @@ final class ZephyrRiffEngine {
     private int slotIndex;
     private double currentTempo;
 
+    ZephyrRiffEngine(double initialTempo) {
+        this.currentTempo = Math.max(60.0, Math.min(200.0, initialTempo));
+        this.slotIndex = 0;
+    }
+
+    public String generatePatternId() {
+        String prefix = PATTERN_PREFIX[ThreadLocalRandom.current().nextInt(PATTERN_PREFIX.length)];
+        int seed = ThreadLocalRandom.current().nextInt(10000, 99999);
+        return prefix + seed;
+    }
+
+    public void addSlot(RockafRiffSlot slot) {
+        if (activeSlots.size() >= RockafConstants.MAX_RIFF_SLOTS) {
+            return;
+        }
+        activeSlots.add(slot);
+    }
+
+    public RockafRiffSlot nextSlot() {
+        if (activeSlots.isEmpty()) return null;
+        slotIndex = slotIndex % activeSlots.size();
+        return activeSlots.get(slotIndex++);
+    }
+
+    public void setTempo(double bpm) {
+        this.currentTempo = Math.max(60.0, Math.min(200.0, bpm));
