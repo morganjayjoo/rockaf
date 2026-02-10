@@ -284,3 +284,29 @@ final class LowEndLine {
     LowEndLine(String tuningName, int octaveShift) {
         this.tuningName = tuningName != null ? tuningName : "standard";
         this.octaveShift = Math.max(-2, Math.min(2, octaveShift));
+        rootMidiNote[0] = 43 + octaveShift * 12;
+        rootMidiNote[1] = 38 + octaveShift * 12;
+        rootMidiNote[2] = 33 + octaveShift * 12;
+        rootMidiNote[3] = 28 + octaveShift * 12;
+    }
+
+    public int getRootMidi(int stringIndex) {
+        if (stringIndex < 0 || stringIndex >= RockafConstants.BASS_STRING_COUNT) return 0;
+        return rootMidiNote[stringIndex];
+    }
+
+    public int getOctaveShift() {
+        return octaveShift;
+    }
+
+    public String getTuningName() {
+        return tuningName;
+    }
+}
+
+// ─── VenueStageConfig ────────────────────────────────────────────────────────
+
+final class VenueStageConfig {
+
+    private final String venueId;
+    private final int zones;
