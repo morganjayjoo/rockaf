@@ -853,3 +853,4 @@ public final class Rockaf {
         System.out.println("Rockaf simulator running. Events: " + core.getEventLog().getCount());
     }
 }
+
