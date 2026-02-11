@@ -830,3 +830,26 @@ public final class Rockaf {
 
         AxeNoiseBank bank = core.getAxeNoiseBank();
         bank.registerProfile("crunch_a", new AxeNoiseBank.AmpProfile("ch_0", 1.2, 0.6, true));
+        bank.registerProfile("lead_b", new AxeNoiseBank.AmpProfile("ch_1", 1.8, 0.8, false));
+        bank.registerProfile("rhythm_c", new AxeNoiseBank.AmpProfile("ch_2", 0.9, 0.5, true));
+        bank.registerProfile("clean_d", new AxeNoiseBank.AmpProfile("ch_3", 0.4, 0.7, false));
+
+        SetlistManager setlist = core.getSetlistManager();
+        for (String name : TRACK_NAMES) {
+            setlist.addTrack(name);
+        }
+
+        core.getCrowdMeter().setEnergy(72);
+        core.start();
+        return core;
+    }
+
+    public static void main(String[] args) {
+        Rockaf core = createAndPopulate();
+        core.triggerRiff();
+        core.advanceSetlist();
+        core.setCrowdEnergy(88);
+        core.requestEncore();
+        System.out.println("Rockaf simulator running. Events: " + core.getEventLog().getCount());
+    }
+}
