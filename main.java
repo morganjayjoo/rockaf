@@ -804,3 +804,29 @@ public final class Rockaf {
     public VenueStageConfig getVenueStage() { return venueStage; }
     public SetlistManager getSetlistManager() { return setlistManager; }
     public CrowdMeterService getCrowdMeter() { return crowdMeter; }
+    public FeedbackBuffer getFeedbackBuffer() { return feedbackBuffer; }
+    public RockafEventLog getEventLog() { return eventLog; }
+    public Instant getStartTime() { return startTime; }
+
+    // ─── Bootstrap / main ────────────────────────────────────────────────────
+
+    private static final String[] TRACK_NAMES = {
+        "Highway Burn", "Neon Frets", "Midnight Overdrive", "Arena Dust",
+        "Backline Surge", "Feedback Loop", "Encore Fire", "Crowd Wave",
+        "Riff Canyon", "Stage Lights", "Distortion Dawn", "Bass Thunder"
+    };
+
+    public static Rockaf createAndPopulate() {
+        Rockaf core = new Rockaf();
+
+        ZephyrRiffEngine engine = core.getRiffEngine();
+        for (int i = 0; i < 12; i++) {
+            String patternId = engine.generatePatternId();
+            double gain = 0.3 + (i % 7) * 0.1;
+            int durationMs = 4000 + (i % 5) * 1000;
+            int bars = 2 + (i % 4);
+            engine.addSlot(new RockafRiffSlot(patternId, gain, durationMs, bars));
+        }
+
+        AxeNoiseBank bank = core.getAxeNoiseBank();
+        bank.registerProfile("crunch_a", new AxeNoiseBank.AmpProfile("ch_0", 1.2, 0.6, true));
