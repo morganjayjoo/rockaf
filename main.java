@@ -778,3 +778,29 @@ public final class Rockaf {
 
     public void advanceSetlist() {
         long now = System.currentTimeMillis();
+        if (now - lastSetChangeMs.get() < RockafConstants.SET_CHANGE_COOLDOWN_MS) {
+            return;
+        }
+        lastSetChangeMs.set(now);
+        String track = setlistManager.nextTrack();
+        if (track != null) {
+            eventLog.append("set_advance", track);
+        }
+    }
+
+    public void setCrowdEnergy(int level) {
+        crowdMeter.setEnergy(level);
+    }
+
+    public void requestEncore() {
+        setlistManager.requestEncore();
+        eventLog.append("encore", String.valueOf(setlistManager.getEncoreCount()));
+    }
+
+    public ZephyrRiffEngine getRiffEngine() { return riffEngine; }
+    public AxeNoiseBank getAxeNoiseBank() { return axeNoiseBank; }
+    public ThumpKickModule getThumpKick() { return thumpKick; }
+    public LowEndLine getLowEndLine() { return lowEndLine; }
+    public VenueStageConfig getVenueStage() { return venueStage; }
+    public SetlistManager getSetlistManager() { return setlistManager; }
+    public CrowdMeterService getCrowdMeter() { return crowdMeter; }
